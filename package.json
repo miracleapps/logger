@@ -1,6 +1,6 @@
 {
   "name": "@miraclesoft/logger",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "Wintson based logger with predefined settings for prod and non-prod environments",
   "main": "src/app.js",
   "keywords": [

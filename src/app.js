@@ -18,23 +18,23 @@ const loggerFormat = format.combine(
 
 const transports = [];
 
-const consoleTransport = new winston.transports.Console({
-  level: 'info',
-});
-
-const fileTransport = new winston.transports.DailyRotateFile({
-  level: 'warn',
-  filename: `./logs/${filename}-%DATE%.log`,
-  datePattern: 'YYYY-MM-DD',
-  zippedArchive: true,
-  maxSize: '20m',
-  maxFiles: process.env.MAX_LOG_FILES || '14d',
-});
-
 if (process.env.NODE_ENV !== 'production') {
+  const consoleTransport = new winston.transports.Console({
+    level: 'info',
+  });
+
   // Add console logger transport for non-prod environments
   transports.push(consoleTransport);
 } else {
+  const fileTransport = new winston.transports.DailyRotateFile({
+    level: 'warn',
+    filename: `./logs/${filename}-%DATE%.log`,
+    datePattern: 'YYYY-MM-DD',
+    zippedArchive: true,
+    maxSize: '20m',
+    maxFiles: process.env.MAX_LOG_FILES || '14d',
+  });
+
   // Add file logger transport to the transports array
   transports.push(fileTransport);
 }
