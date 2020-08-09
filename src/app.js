@@ -2,6 +2,9 @@ const winston = require('winston');
 require('winston-daily-rotate-file');
 const { format } = require('logform');
 
+// Get file name for the log files
+const filename = process.env.APP_NAME || 'app-logs';
+
 const loggerFormat = format.combine(
   format.timestamp(),
   format.align(),
@@ -21,11 +24,11 @@ const consoleTransport = new winston.transports.Console({
 
 const fileTransport = new winston.transports.DailyRotateFile({
   level: 'warn',
-  filename: `./logs/${process.env.APP_NAME}-%DATE%.log`,
+  filename: `./logs/${filename}-%DATE%.log`,
   datePattern: 'YYYY-MM-DD',
   zippedArchive: true,
   maxSize: '20m',
-  maxFiles: '14d',
+  maxFiles: process.env.MAX_LOG_FILES || '14d',
 });
 
 if (process.env.NODE_ENV !== 'production') {
